@@ -29,6 +29,7 @@ out/
 Thumbs.db
 desktop.ini
 src/main/resources/application.properties
+repomix-output.xml
 
 temp/
 tmp/
