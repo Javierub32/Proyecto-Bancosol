@@ -1,4 +1,5 @@
-<%-- Created by IntelliJ IDEA. User: javie Date: 18/04/2026 Time: 23:35 To
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya" %>
+<%@ page import="java.util.List" %><%-- Created by IntelliJ IDEA. User: javie Date: 18/04/2026 Time: 23:35 To
 change this template use File | Settings | File Templates. --%> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -7,7 +8,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <link rel="stylesheet" href="/css/voluntarios.css" />
   </head>
   <body>
+  <%
+    List<TiendaCampanya> tiendas = (List<TiendaCampanya>) request.getAttribute("tiendaCampanyas");
+  %>
     <h1>Asignación de voluntarios</h1>
+  <main>
+
+
     <table>
       <thead>
         <tr>
@@ -23,19 +30,26 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </tr>
       </thead>
       <tbody id="table-body">
+      <%
+        for(TiendaCampanya tienda: tiendas ) {
+      %>
         <tr>
-          <td>Tienda 1</td>
-          <td>Domicilio 1</td>
-          <td>Localidad 1</td>
-          <td>Capitan 1</td>
-          <td>Viernes Mañana 1</td>
-          <td>Viernes Tarde 1</td>
-          <td>Sabado Mañana 1</td>
-          <td>Sabado Tarde 1</td>
-          <td>Observaciones 1</td>
+          <td><%= tienda.getTienda().getNombre() %></td>
+          <td><%= tienda.getTienda().getDomicilio() %> </td>
+          <td><%= tienda.getTienda().getLocalidad().getNombre() %></td>
+          <td><%= tienda.getCapitan().getNombre() %> </td>
+          <td>Nadie Aún</td>
+          <td>Nadie Aún</td>
+          <td>Nadie Aún</td>
+          <td>Nadie Aún</td>
+          <td style="max-width: 35vw">Un nene se ha cagado en la sección de congelados, ha tenido que venir mari carmen a limpiarlo todo</td>
         </tr>
+      <%
+        }
+      %>
       </tbody>
     </table>
+  </main>
     <div id="info-container">
       <div id="volunteer-container">
         <div id="volunteer-localization">
@@ -76,7 +90,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
       </div>
       <div id="button-container">
-        <button id="add-button">Agregar</button>
         <button id="save-button">Guardar</button>
         <button id="cancel-button">Cancelar</button>
         <button id="export-button">Exportar</button>
@@ -84,6 +97,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
     </div>
   </body>
   <script>
+    /*
 	// Simulación de datos para llenar la tabla
     const trOriginal = document.querySelector("#table-body tr");
     for (let i = 0; i < 5; i++) {
@@ -97,7 +111,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         trOriginal.parentNode.appendChild(clonedRow);
     }
 	trOriginal.parentNode.removeChild(trOriginal);
-
+    */
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
 	
