@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AuthController {
-    @GetMapping("/hello")
+    @GetMapping("/auth")
     public String doInit(Model model) {
-        return "voluntarios";
+        return "auth";
     }
 }

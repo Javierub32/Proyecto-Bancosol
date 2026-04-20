@@ -112,6 +112,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
     }
 	trOriginal.parentNode.removeChild(trOriginal);
     */
+
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
 	
@@ -143,6 +144,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 	document.querySelector("#cancel-button").addEventListener("click", (e) => {
 		e.preventDefault();
 		form.style.visibility = 'hidden';
+		table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
 	})
   </script>
 </html>
