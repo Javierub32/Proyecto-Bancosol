@@ -24,7 +24,10 @@ public class AsignacionTurno {
     @JoinColumn(name = "id_colaborador")
     private Colaborador colaborador;
 
-    private String turno;
+    // Relación añadida con la tabla tipo_turno
+    @ManyToOne
+    @JoinColumn(name = "id_turno")
+    private TipoTurno tipoTurno;
 
     @Column(name = "hora_inicio")
     private LocalTime horaInicio;

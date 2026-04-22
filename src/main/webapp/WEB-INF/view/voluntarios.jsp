@@ -1,5 +1,6 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya" %>
-<%@ page import="java.util.List" %><%-- Created by IntelliJ IDEA. User: javie Date: 18/04/2026 Time: 23:35 To
+<%@ page import="java.util.List" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores" %><%-- Created by IntelliJ IDEA. User: javie Date: 18/04/2026 Time: 23:35 To
 change this template use File | Settings | File Templates. --%> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,12 +10,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
   </head>
   <body>
   <%
-    List<TiendaCampanya> tiendas = (List<TiendaCampanya>) request.getAttribute("tiendaCampanyas");
+    List<VistaAsignacionColaboradores> tiendas = (List<VistaAsignacionColaboradores>) request.getAttribute("asignacionColaboradores");
+
+
   %>
     <h1>Asignación de voluntarios</h1>
   <main>
-
-
     <table>
       <thead>
         <tr>
@@ -26,23 +27,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <th>Viernes Tarde</th>
           <th>Sabado Mañana</th>
           <th>Sabado Tarde</th>
-          <th>Observaciones</th>
         </tr>
       </thead>
       <tbody id="table-body">
       <%
-        for(TiendaCampanya tienda: tiendas ) {
+        for(VistaAsignacionColaboradores tienda: tiendas ) {
       %>
-        <tr>
-          <td><%= tienda.getTienda().getNombre() %></td>
-          <td><%= tienda.getTienda().getDomicilio() %> </td>
-          <td><%= tienda.getTienda().getLocalidad().getNombre() %></td>
-          <td><%= tienda.getCapitan().getNombre() %> </td>
-          <td>Nadie Aún</td>
-          <td>Nadie Aún</td>
-          <td>Nadie Aún</td>
-          <td>Nadie Aún</td>
-          <td style="max-width: 35vw">Un nene se ha cagado en la sección de congelados, ha tenido que venir mari carmen a limpiarlo todo</td>
+        <tr data-id="<%= tienda.getIdTiendaCampanya() %>" data-li="<%= tienda.getLineales()%>">
+          <td><%= tienda.getTienda() %></td>
+          <td><%= tienda.getDomicilio() %> </td>
+          <td><%= tienda.getLocalidad() %></td>
+          <td><%= tienda.getCapitan() %> </td>
+          <td><%= tienda.getViernesManana() != null ? tienda.getViernesManana() : "" %></td>
+          <td><%= tienda.getViernesTarde() != null ? tienda.getViernesTarde() : ""  %></td>
+          <td><%= tienda.getSabadoManana() != null ? tienda.getSabadoManana() : ""  %></td>
+          <td><%= tienda.getSabadoTarde() != null ? tienda.getSabadoTarde() : "" %></td>
         </tr>
       <%
         }
@@ -51,49 +50,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
     </table>
   </main>
     <div id="info-container">
-      <div id="volunteer-container">
-        <div id="volunteer-localization">
-          <div><p id="lbl-tienda">Carrefour</p></div>
-          <div><p id="lbl-domicilio">Calle Principal</p></div>
-        </div>
-        <div id="volunteer-schedule">
-          <label for="volunteer-1">
-            <input type="checkbox" id="volunteer-1" name="schedule" value="viernes_manana" />
-            Viernes mañana
-          </label>
-          <label for="volunteer-2">
-            <input type="checkbox" id="volunteer-2" name="schedule" value="sabado_manana" />
-            Sabado Mañana
-          </label>
-          <label for="volunteer-3">
-            <input type="checkbox" id="volunteer-3" name="schedule" value="sabado_tarde" />
-            Sabado tarde
-          </label>
-        </div>
-        <div id="volunteer-info">
-          <div id="volunteer-name">
-            <div>
-              <p id="lbl-capitan">AYUNTAMIETNO DE ALMAYATE</p>
-            </div>
-            <div class="volunteer-date">
-              <div>COMIENZO</div>
-              <div>10</div>
-            </div>
-            <div class="volunteer-date">
-              <div>FIN</div>
-              <div>14</div>
-            </div>
-          </div>
-          <div id="volunteer-observations">
-            <p id="lbl-obs">TENEMOS 10 VOLUNTARIOS DISPONIBLES</p>
-          </div>
-        </div>
-      </div>
-      <div id="button-container">
-        <button id="save-button">Guardar</button>
-        <button id="cancel-button">Cancelar</button>
-        <button id="export-button">Exportar</button>
-      </div>
+      <jsp:include page="info_turno.jsp" />
     </div>
   </body>
   <script>
@@ -112,18 +69,57 @@ contentType="text/html;charset=UTF-8" language="java" %>
     }
 	trOriginal.parentNode.removeChild(trOriginal);
     */
-
 	const table = document.querySelector("#table-body");
 	const form = document.querySelector("#volunteer-container");
-	
-	const lblTienda = document.getElementById('lbl-tienda');
-    const lblDomicilio = document.getElementById('lbl-domicilio');
-    const lblCapitan = document.getElementById('lbl-capitan');
-    const lblObs = document.getElementById('lbl-obs');
-	
+    const infoContainer = document.querySelector("#info-container");
+    infoContainer.innerHTML = "";
+
+    let id;
+    let lineales = 1;
+    let linealActual = 1;
+    let turno = 1;
+
+
+    function fetchTurnoData() {
+      if (!id) return;
+
+      const params = new URLSearchParams();
+      params.append("id", id);
+      params.append("turno", turno);
+      params.append("lineales", lineales);
+      params.append("linealActual", linealActual);
+
+
+      fetch("/buscarTurno", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: params.toString()
+      })
+              .then(response => response.text())
+              .then(html => {
+                // Reemplazamos el HTML con la nueva información
+                infoContainer.innerHTML = html;
+
+                // Hacemos visible el formulario
+                const form = document.querySelector("#volunteer-container");
+                if(form) form.style.visibility = 'visible';
+              })
+              .catch(error => console.error("Error:", error));
+    }
+
 	table.addEventListener("click", (e) => {
 		const row = e.target.closest("tr");
 		if (!row) return; // Se ha pinchado en otro lado
+
+        // Cambiamos el id y los lineales de la tienda
+        id = row.dataset.id;
+        lineales = row.dataset.li;
+
+        // Ponemos como turno por defecto el Viernes por la mañana y el lineal 1
+        turno = 1;
+        linealActual = 1;
 
 		// Limpiamos la clase selected de las otras filas
 		table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
@@ -131,20 +127,40 @@ contentType="text/html;charset=UTF-8" language="java" %>
 		// Se la metemos a la clase seleccionada
 		row.classList.add("selected");
 
-		const info = row.querySelectorAll("td");
-		
-		lblTienda.innerText = info[0].innerText;
-        lblDomicilio.innerText = info[1].innerText;
-        lblCapitan.innerText = info[3].innerText;
-        lblObs.innerText = info[8].innerText;
-		
-		form.style.visibility = 'visible';
+
+        // Hacemos la petición para obtener los datos de la tienda y el turno 1
+        fetchTurnoData();
 	})
 
-	document.querySelector("#cancel-button").addEventListener("click", (e) => {
-		e.preventDefault();
-		form.style.visibility = 'hidden';
-		table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
-	})
+    // Usamos delegación de eventos en #info-container para los radio buttons
+    // ya que su HTML se destruye y se vuelve a crear con cada petición fetch
+    infoContainer.addEventListener("change", (e) => {
+      if (e.target.name === "schedule") {
+        turno = e.target.value;
+        fetchTurnoData(); // Volvemos a pedir los datos con el nuevo turno
+      }
+    });
+
+    infoContainer.addEventListener("change", (e) => {
+      if (e.target.name === "lineal") {
+        linealActual = e.target.value;
+        fetchTurnoData(); // Volvemos a pedir los datos con el nuevo turno
+      }
+    })
+
+    // Delegación de eventos para el botón de cancelar
+    infoContainer.addEventListener("click", (e) => {
+      if (e.target.id === "cancel-button") {
+        e.preventDefault();
+
+        const form = document.querySelector("#volunteer-container");
+        if (form) form.style.visibility = 'hidden';
+        infoContainer.innerHTML = "";
+        turno = 1;
+        id = null;
+        lineales = 1;
+        table.querySelectorAll("tr").forEach(row => row.classList.remove("selected"));
+      }
+    });
   </script>
 </html>

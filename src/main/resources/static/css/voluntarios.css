@@ -84,6 +84,19 @@ td {
 	margin-top: 5px;
 }
 
+#volunteer-lineal {
+	display: flex;
+	flex-direction: column;
+	min-width: 70px;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+#volunteer-lineal label {
+	margin-top: 5px;
+}
+
+
 
 #volunteer-info {
     flex: 3; /* Toma el triple de espacio que la localización */
