@@ -150,6 +150,22 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
     // Delegación de eventos para el botón de cancelar
     infoContainer.addEventListener("click", (e) => {
+      if (e.target.id === "create-button") {
+        console.log("Botón pulsado. ID:", id, "Turno:", turno, "Lineal:", linealActual);
+
+        if (id && turno && linealActual) {
+          const params = new URLSearchParams();
+          params.append("id", id);
+          params.append("turno", turno);
+          params.append("lineal", linealActual);
+
+          // Usamos backticks (`) para que la variable se evalúe correctamente
+          window.location.href = `/crearTurno?\${params.toString()}`;
+        } else {
+          console.error("Faltan datos para navegar");
+        }
+      }
+
       if (e.target.id === "cancel-button") {
         e.preventDefault();
 
