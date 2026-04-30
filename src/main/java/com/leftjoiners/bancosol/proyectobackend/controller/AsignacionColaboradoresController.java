@@ -2,6 +2,8 @@ package com.leftjoiners.bancosol.proyectobackend.controller;
 
 import com.leftjoiners.bancosol.proyectobackend.dao.AsignacionColaboradoresRepository;
 import com.leftjoiners.bancosol.proyectobackend.dao.TiendaCampanyaRepository;
+import com.leftjoiners.bancosol.proyectobackend.dao.TipoTurnoRepository;
+import com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno;
 import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya;
 import com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class AsignacionColaboradoresController {
 
     @Autowired
     protected AsignacionColaboradoresRepository asignacionColaboradoresRepository;
+
+    @Autowired
+    protected TipoTurnoRepository tipoTurnoRepository;
 
 
 
@@ -45,5 +50,38 @@ public class AsignacionColaboradoresController {
         model.addAttribute("linealActual", linealActual);
         model.addAttribute("tienda", tiendaCampanya);
         return "info_turno";
+    }
+
+    @GetMapping("/crearTurno")
+    public String crearTurno(@RequestParam(value = "id", required = false) Integer id,
+                              @RequestParam(value = "turno", required = false) Integer turno,
+                              @RequestParam(value = "lineal", required = false) Integer lineal,
+                              Model model) {
+        TiendaCampanya tienda = null;
+        AsignacionTurno asignacionTurno = null;
+
+        // Buscamos la tienda si nos pasan un ID
+        if (id != null) {
+            tienda = tiendaCampanyaRepository.findById(id).orElse(null);
+        }
+
+        if (tienda != null && tienda.getTurnos() != null) {
+            asignacionTurno = tienda.getTurnos().stream()
+                    .filter(t -> t.getTipoTurno() != null
+                            && t.getTipoTurno().getId().equals(turno)
+                            && (lineal == null || lineal.equals(t.getLineal())))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        if (asignacionTurno == null) {
+            asignacionTurno = new AsignacionTurno();
+            asignacionTurno.setTiendaCampanya(tienda);
+            asignacionTurno.setLineal(lineal);
+            asignacionTurno.setTipoTurno(this.tipoTurnoRepository.findById(turno).orElse(null));
+        }
+
+        model.addAttribute("asignacionTurno", asignacionTurno);
+        return "formulario_turno";
     }
 }
