@@ -42,3 +42,34 @@ td {
     display: flex;
     gap: 2rem;
 }
+
+.buttons-section{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.25rem;
+}
+
+.flex-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.flex-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.column-button {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+button {
+    padding: 0.5rem 1.25rem;
+    border: 2px #4472c4 solid;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+}
