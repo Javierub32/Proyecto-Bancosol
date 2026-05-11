@@ -318,6 +318,15 @@
     margin-top: 18px;
 }
 
+.btn-primary{
+    margin: 3px;
+}
+
+.btn-outline{
+    margin: 3px;
+}
+
+
 .campanya-list-actions a {
     text-decoration: none;
 }

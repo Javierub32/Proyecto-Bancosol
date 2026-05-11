@@ -25,7 +25,12 @@
                     <h1>Gestión de Campañas</h1>
                     <p>Consulta las campañas creadas y genera nuevas campañas.</p>
                 </div>
+                <div class="campanya-list-actions">
+                    <a class="btn-outline" href="/campanyas/gestionarCadenas">Gestionar cadenas del sistema</a>
+                    <a href="/campanyas/crearCampanya" class="btn-primary">Generar nueva Campaña</a>
+                </div>
             </div>
+
 
             <div class="card campanya-table-card">
                 <table class="modernTable">
@@ -66,9 +71,7 @@
                 </table>
             </div>
 
-            <div class="campanya-list-actions">
-                <a href="/campanyas/crearCampanya" class="btn-primary">Generar nueva Campaña</a>
-            </div>
+
         </section>
     </main>
 

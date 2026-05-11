@@ -88,8 +88,8 @@
                                     </label>
                                 <%};%>
                             </div>
-                            <section class="info-box">
-                                ** Añadir aquí botones para la edición de cadenas.
+                            <section class="cadenas-btns">
+
                             </section>
                         </section>
                         <section class="form-actions">
