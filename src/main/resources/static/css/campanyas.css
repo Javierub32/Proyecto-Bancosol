@@ -270,51 +270,45 @@
     padding: 0;
     overflow: hidden;
 }
+/* ============================ */
+
+/*Retoques de la tabla para campañas*/
 
 .modernTable {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    font-size: 0.95rem;
+    table-layout: fixed;
+
 }
 
-.modernTable thead {
-    background-color: #f8fafc;
+.modernTable th:nth-child(1),
+.modernTable td:nth-child(1) {
+    width: 13%;
 }
 
-.modernTable th {
-    text-align: left;
-    padding: 14px 16px;
-    color: var(--text-dark);
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
+.modernTable th:nth-child(2),
+.modernTable td:nth-child(2) {
+    width: 19%;
 }
 
-.modernTable td {
-    padding: 13px 16px;
-    color: var(--text-dark);
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: top;
+.modernTable th:nth-child(3),
+.modernTable td:nth-child(3),
+.modernTable th:nth-child(4),
+.modernTable td:nth-child(4) {
+    width: 12%;
 }
 
-.modernTable tbody tr:hover {
-    background-color: #f8fafc;
+.modernTable th:nth-child(5),
+.modernTable td:nth-child(5) {
+    width: 32%;
 }
 
-.modernTable tbody tr:last-child td {
-    border-bottom: none;
+.modernTable th:nth-child(6),
+.modernTable td:nth-child(6) {
+    width: 12%;
 }
 
-.modernTable a {
-    color: var(--primary-blue);
-    font-weight: 500;
-    text-decoration: none;
-}
+/* ============================ */
 
-.modernTable a:hover {
-    text-decoration: underline;
-}
+
 
 .campanya-list-actions {
     display: flex;
@@ -328,13 +322,14 @@
 
 .cadena-chip {
     display: inline-block;
-    padding: 4px 9px;
-    margin: 2px 4px 2px 0;
+    padding: 3px 8px;
+    margin: 2px 3px 2px 0;
     border-radius: 999px;
     background-color: #eef2ff;
     color: var(--primary-blue);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 500;
+    line-height: 1.3;
 }
 
 .action-link {
