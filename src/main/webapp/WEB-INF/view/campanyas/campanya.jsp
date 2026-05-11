@@ -3,7 +3,7 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Tienda" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Campanya" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Cadena" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.CadenaCampanya" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -47,9 +47,10 @@
                             <td><%= campanya.getFechaInicio().toString() %></td>
                             <td><%= campanya.getFechaFin().toString() %></td>
                             <td>
-                                <% for (CadenaCampanya c: campanya.getCadenasCampanya()){%>
-                                    <span class="cadena-chip"><%=c.getCadena().getNombre()%></span>
+                                <% for (Cadena c: campanya.getCadenasParticipantes()){%>
+                                    <span class="cadena-chip"><%=c.getNombre()%></span>
                                 <%};%>
+                                <%=campanya.getCadenasParticipantes().isEmpty() ? "Sin cadenas participantes" : ""%>
                             </td>
                             <td>
                                 <a class="action-link" href="/campanyas/editarCampanya?id=<%=campanya.getId()%>">Editar</a>

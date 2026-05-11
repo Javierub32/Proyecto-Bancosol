@@ -32,9 +32,6 @@ public class CampanyasController {
     private CadenaRepository cadenasRepo;
 
     @Autowired
-    private CadenaCampanyaRepository cadenaCampanyaRepo;
-
-    @Autowired
     private TiendaRepository tiendaRepo;
 
     @Autowired
@@ -43,6 +40,7 @@ public class CampanyasController {
     @GetMapping("")
     public String listarCampanyas(Model model) {
         model.addAttribute("campanyas", campanyaRepo.findAll());
+        model.addAttribute("currentSection", "campanyas");
         return "campanyas/campanya";
     }
 
@@ -77,7 +75,7 @@ public class CampanyasController {
         campanya.setTipoCampanya(tipoCampanyaRepo.findById(idTipo).get());
         campanya.setFechaInicio(fechaInicio);
         campanya.setFechaFin(fechaFin);
-        campanya.setCadenasCampanya(cadenaCampanyaRepo.findAllById(cadenasSeleccionadas));
+        campanya.setCadenasParticipantes(cadenasRepo.findAllById(cadenasSeleccionadas));
 
         int duracion = (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin) + 1;
         campanya.setDuracion(duracion);
@@ -99,8 +97,7 @@ public class CampanyasController {
         model.addAttribute("fechaFin", campanya.getFechaFin());
         model.addAttribute("tipoCampanyaActual", campanya.getTipoCampanya());
 
-        List<Cadena> cadenasCampanya = campanya.getCadenasCampanya().stream().map(cadenaCampanya -> cadenaCampanya.getCadena()).toList();
-
+        List<Cadena> cadenasCampanya = campanya.getCadenasParticipantes();
         model.addAttribute("cadenasCampanyaActual", cadenasCampanya);
         model.addAttribute("editando", true);
 
