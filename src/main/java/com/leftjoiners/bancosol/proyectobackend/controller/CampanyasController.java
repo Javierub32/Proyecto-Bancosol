@@ -90,6 +90,8 @@ public class CampanyasController {
         if (campanya == null) {
             return "redirect:/campanyas";
         }
+        model.addAttribute("currentSection", "campanyas");
+
         //VAlores de la campañana que estamos editando.
         model.addAttribute("nombreCampanya", campanya.getNombre());
         model.addAttribute("idCampanya", campanya.getId());

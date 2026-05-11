@@ -5,7 +5,7 @@
    Layout general campañas
    ============================ */
 
-.campanya-page {
+.main-page {
     padding: 25px;
     box-sizing: border-box;
     min-height: calc(100vh - 80px);
@@ -281,30 +281,32 @@
 
 .modernTable th:nth-child(1),
 .modernTable td:nth-child(1) {
-    width: 13%;
+    width: 12%;
 }
 
 .modernTable th:nth-child(2),
 .modernTable td:nth-child(2) {
-    width: 19%;
+    width: 13%;
 }
 
 .modernTable th:nth-child(3),
-.modernTable td:nth-child(3),
-.modernTable th:nth-child(4),
-.modernTable td:nth-child(4) {
-    width: 12%;
+.modernTable td:nth-child(3) {
+    width: 19%;
 }
 
+.modernTable th:nth-child(4),
+.modernTable td:nth-child(4),
 .modernTable th:nth-child(5),
 .modernTable td:nth-child(5) {
-    width: 32%;
+    width: 12%;
 }
 
 .modernTable th:nth-child(6),
 .modernTable td:nth-child(6) {
-    width: 12%;
+    width: 32%;
 }
+
+
 
 /* ============================ */
 
@@ -344,4 +346,83 @@
 .action-link:hover {
     background-color: #f0f7ff;
     text-decoration: none;
+}
+
+/* Botón editar campaña */
+.edit-campanya-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 8px 14px;
+    border-radius: 10px;
+
+    background-color: #eaf2ff;
+    color: #123c69;
+    font-weight: 700;
+    font-size: 14px;
+
+    text-decoration: none;
+    border: 1px solid #c7dbf5;
+
+    transition: background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.edit-campanya-btn:hover {
+    background-color: #d9eaff;
+    color: #0b2d52;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(18, 60, 105, 0.15);
+}
+
+.edit-campanya-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.edit-campanya-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ============================
+   Select tipo campaña
+   ============================ */
+
+.campanya-select {
+    width: 100%;
+    height: 46px;
+    box-sizing: border-box;
+    padding: 0 16px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+
+    background-color: white;
+    color: var(--text-dark);
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    outline: none;
+
+    transition: border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.campanya-select:hover {
+    border-color: var(--accent-blue);
+    background-color: #f8fafc;
+}
+
+.campanya-select:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(68, 114, 196, 0.12);
 }
