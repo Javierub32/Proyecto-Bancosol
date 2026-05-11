@@ -32,8 +32,14 @@ public class Campanya {
 
     private Integer duracion;
 
-    @OneToMany(mappedBy = "campanya")
-    private List<CadenaCampanya> cadenasCampanya = new ArrayList<>();
+    // --- NUEVA RELACIÓN MUCHOS A MUCHOS ---
+    @ManyToMany
+    @JoinTable(
+            name = "campanya_cadena", // Nuevo nombre más estándar para tablas de unión
+            joinColumns = @JoinColumn(name = "id_campanya"),
+            inverseJoinColumns = @JoinColumn(name = "id_cadena")
+    )
+    private List<Cadena> cadenasParticipantes = new ArrayList<>();
 
     @OneToMany(mappedBy = "campanya")
     private List<TiendaCampanya> tiendasCampanya = new ArrayList<>();

@@ -22,6 +22,7 @@ public class Cadena {
     @OneToMany(mappedBy = "cadena")
     private List<Tienda> tiendas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cadena")
-    private List<CadenaCampanya> cadenasCampanya = new ArrayList<>();
+    // --- MAPEO INVERSO MUCHOS A MUCHOS ---
+    @ManyToMany(mappedBy = "cadenasParticipantes")
+    private List<Campanya> campanyas = new ArrayList<>();
 }
