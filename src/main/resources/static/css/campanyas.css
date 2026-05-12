@@ -435,3 +435,43 @@
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(68, 114, 196, 0.12);
 }
+
+.btn-nueva-cadena {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+
+    padding: 10px 20px;
+    border-radius: 6px;
+
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.delete-cdn-check{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 8px 14px;
+    border-radius: 10px;
+
+    background-color: #eaf2ff;
+    color: #123c69;
+    font-weight: 700;
+    font-size: 14px;
+
+    text-decoration: none;
+    border: 1px solid #c7dbf5;
+
+    transition: background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}

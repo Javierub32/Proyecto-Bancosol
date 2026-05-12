@@ -4,6 +4,7 @@ import com.leftjoiners.bancosol.proyectobackend.dao.*;
 import com.leftjoiners.bancosol.proyectobackend.entity.Cadena;
 import com.leftjoiners.bancosol.proyectobackend.entity.Campanya;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -116,12 +117,53 @@ public class CampanyasController {
         List<Cadena> listaCadenas = cadenasRepo.findAll();
 
         model.addAttribute("cadenasSistema", listaCadenas);
+        model.addAttribute("currentSection", "campanyas");
         return "campanyas/cadenas";
     }
 
-    @PostMapping("/guardarCadenasSistema")
-    public String guardarCadenas (){
-        return "redirect:/campanyas";
+    @GetMapping("/crearCadena")
+    public String crearCadena(Model model){
+        model.addAttribute("editando", false);
+        return "campanyas/formularioCadena";
+    }
+
+    @GetMapping("/editarCadena")
+    public String editarCadena(Model model,
+                               @RequestParam("id")Integer idCadena
+                                ){
+        Cadena cadenaActual = cadenasRepo.findById(idCadena).get();
+
+        model.addAttribute("nombreCadena", cadenaActual.getNombre());
+        model.addAttribute("codigoCadena", cadenaActual.getCodigo());
+        model.addAttribute("editando", true);
+        model.addAttribute("idCadena", idCadena);
+        model.addAttribute("currentSection", "campanyas");
+
+        return "/campanyas/formularioCadena";
+
+    }
+
+    @PostMapping("/guardarCadena")
+    public String guardarCadena(@RequestParam("nombre") String nombreCadena,
+                                @RequestParam("codigo") String codigoCadena,
+                                @RequestParam("id") Integer idCadena
+                                ){
+        Cadena cadenaActual = cadenasRepo.findById(idCadena).get();
+        if (cadenaActual==null){
+            cadenaActual = new Cadena();
+        }
+        cadenaActual.setNombre(nombreCadena);
+        cadenaActual.setCodigo(codigoCadena);
+        cadenasRepo.save(cadenaActual);
+        return "redirect:/campanyas/gestionarCadenas";
+    }
+
+    @PostMapping("/eliminarCadenasSistema")
+    public String guardarCadenas (@RequestParam("cadenas") List<Integer> idCadenasEliminar){
+
+        cadenasRepo.deleteAllById(idCadenasEliminar);
+
+        return "redirect:/campanyas/gestionarCadenas";
     }
 
 }
