@@ -6,22 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "distrito")
+@Table(name = "entidad")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Distrito {
+public class EntidadEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer numero;
     private String nombre;
 
-    @OneToMany(mappedBy = "distrito")
-    private List<Tienda> tiendas = new ArrayList<>();
-
-    @OneToMany(mappedBy = "distrito")
-    private List<Usuario> usuarios = new ArrayList<>();
+    @OneToMany(mappedBy = "entidad")
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 }

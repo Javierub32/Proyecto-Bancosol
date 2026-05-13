@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "rol")
+@Table(name = "tipo_turno")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rol {
+public class TipoTurnoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
 
-    @OneToMany(mappedBy = "rol")
-    private List<Usuario> usuarios = new ArrayList<>();
+    @OneToMany(mappedBy = "tipoTurno")
+    private List<TurnoEntity> asignacionesTurno = new ArrayList<>();
 }

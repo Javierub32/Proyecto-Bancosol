@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Colaborador {
+public class ColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,24 +27,24 @@ public class Colaborador {
 
     @ManyToOne
     @JoinColumn(name = "localidad_sede")
-    private Localidad localidadSede;
+    private LocalidadEntity localidadSede;
 
     @ManyToOne
     @JoinColumn(name = "colabora_en")
-    private Localidad colaboraEn;
+    private LocalidadEntity colaboraEn;
 
     private Boolean temporal;
 
     @ManyToOne
     @JoinColumn(name = "id_coordinador")
-    private Usuario coordinador;
+    private UsuarioEntity coordinador;
 
     @Column(columnDefinition = "TEXT")
     private String observaciones;
 
     @OneToMany(mappedBy = "colaborador")
-    private List<ContactoColaborador> contactos = new ArrayList<>();
+    private List<ContactoColaboradorEntity> contactos = new ArrayList<>();
 
     @OneToMany(mappedBy = "colaborador")
-    private List<AsignacionTurno> turnos = new ArrayList<>();
+    private List<TurnoEntity> turnos = new ArrayList<>();
 }

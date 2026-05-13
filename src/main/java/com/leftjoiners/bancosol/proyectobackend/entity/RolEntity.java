@@ -6,21 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "zona")
+@Table(name = "rol")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Zona {
+public class RolEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
 
-    @OneToMany(mappedBy = "zona")
-    private List<Municipio> municipios = new ArrayList<>();
-
-    @OneToMany(mappedBy = "zonaAsignada")
-    private List<Usuario> usuarios = new ArrayList<>();
+    @OneToMany(mappedBy = "rol")
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 }

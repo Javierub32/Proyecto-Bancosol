@@ -11,27 +11,27 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TiendaCampanya {
+public class TiendaCampanyaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_tienda")
-    private Tienda tienda;
+    private TiendaEntity tienda;
 
     @ManyToOne
     @JoinColumn(name = "id_campanya")
-    private Campanya campanya;
+    private CampanyaEntity campanya;
 
     @ManyToOne
     @JoinColumn(name = "id_coordinador")
-    private Usuario coordinador;
+    private UsuarioEntity coordinador;
 
     @ManyToOne
     @JoinColumn(name = "id_capitan")
-    private Usuario capitan;
+    private UsuarioEntity capitan;
 
     @OneToMany(mappedBy = "tiendaCampanya")
-    private List<AsignacionTurno> turnos = new ArrayList<>();
+    private List<TurnoEntity> turnos = new ArrayList<>();
 }

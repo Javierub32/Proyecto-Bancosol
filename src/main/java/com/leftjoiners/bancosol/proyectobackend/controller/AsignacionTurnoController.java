@@ -1,10 +1,12 @@
 package com.leftjoiners.bancosol.proyectobackend.controller;
 
 import com.leftjoiners.bancosol.proyectobackend.dao.*;
-import com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno;
-import com.leftjoiners.bancosol.proyectobackend.entity.Colaborador;
-import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya;
-import com.leftjoiners.bancosol.proyectobackend.entity.VistaAsignacionColaboradores;
+import com.leftjoiners.bancosol.proyectobackend.dto.AsignacionTurno;
+import com.leftjoiners.bancosol.proyectobackend.entity.ColaboradorEntity;
+import com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanyaEntity;
+import com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity;
+import com.leftjoiners.bancosol.proyectobackend.service.AsignacionTurnoService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,13 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/turnos")
 public class AsignacionTurnoController {
     @Autowired
     protected TiendaCampanyaRepository tiendaCampanyaRepository;
 
-    @Autowired
-    protected AsignacionColaboradoresRepository asignacionColaboradoresRepository;
+    private final AsignacionTurnoService asignacionTurnoService;
 
     @Autowired
     protected TipoTurnoRepository tipoTurnoRepository;
@@ -32,11 +34,11 @@ public class AsignacionTurnoController {
     protected ColaboradoresRespository colaboradoresRespository;
 
     @Autowired
-    protected AsignacionTurnoRepository asignacionTurnoRepository;
+    protected TurnoRepository turnoRepository;
 
     @GetMapping("")
     public String doInit(Model model) {
-        List<VistaAsignacionColaboradores> asignacionColaboradores = asignacionColaboradoresRepository.findAll();
+        List<AsignacionTurno> asignacionColaboradores = asignacionTurnoService.listarAsignacionColaboradores();
 
         model.addAttribute("asignacionColaboradores", asignacionColaboradores);
         model.addAttribute("currentSection", "turnos");
@@ -49,8 +51,8 @@ public class AsignacionTurnoController {
                               @RequestParam(value = "lineales", required = false) Integer lineales,
                               @RequestParam(value = "linealActual", required = false) Integer linealActual,
                               Model model) {
-        TiendaCampanya tiendaCampanya = tiendaCampanyaRepository.findById(id).orElse(null);
-        AsignacionTurno asignacionTurno = this.asignacionTurnoRepository.buscarTurnoEspecifico(id, turno, linealActual).orElse(null);
+        TiendaCampanyaEntity tiendaCampanya = tiendaCampanyaRepository.findById(id).orElse(null);
+        TurnoEntity asignacionTurno = this.turnoRepository.buscarTurnoEspecifico(id, turno, linealActual).orElse(null);
 
         model.addAttribute("id", id);
         model.addAttribute("turno", turno);
@@ -67,14 +69,14 @@ public class AsignacionTurnoController {
                               @RequestParam(value = "turno", required = false) Integer turno,
                               @RequestParam(value = "lineal", required = false) Integer lineal,
                               Model model) {
-        TiendaCampanya tienda = tiendaCampanyaRepository.findById(id).orElse(null);;
-        AsignacionTurno asignacionTurno = this.asignacionTurnoRepository.buscarTurnoEspecifico(id, turno, lineal).orElse(null);
-        Colaborador colaborador = null;
+        TiendaCampanyaEntity tienda = tiendaCampanyaRepository.findById(id).orElse(null);;
+        TurnoEntity asignacionTurno = this.turnoRepository.buscarTurnoEspecifico(id, turno, lineal).orElse(null);
+        ColaboradorEntity colaborador = null;
 
         if (asignacionTurno != null) colaborador = asignacionTurno.getColaborador();
 
         if (asignacionTurno == null) {
-            asignacionTurno = new AsignacionTurno();
+            asignacionTurno = new TurnoEntity();
             asignacionTurno.setTiendaCampanya(tienda);
             asignacionTurno.setLineal(lineal);
             asignacionTurno.setTipoTurno(this.tipoTurnoRepository.findById(turno).orElse(null));
@@ -97,24 +99,24 @@ public class AsignacionTurnoController {
                                @RequestParam("horaFin") LocalTime horaFin,
                                @RequestParam("numVoluntarios") Integer numVoluntarios,
                                @RequestParam("observaciones") String observaciones) {
-        AsignacionTurno asignacionTurno = new AsignacionTurno();
-        asignacionTurno.setId(id);
-        asignacionTurno.setTiendaCampanya(tiendaCampanyaRepository.findById(tiendaCampanyaId).orElse(null));
-        asignacionTurno.setLineal(lineal);
-        asignacionTurno.setTipoTurno(this.tipoTurnoRepository.findById(tipoTurnoId).orElse(null));
-        asignacionTurno.setColaborador(this.colaboradoresRespository.findById(idColaborador).orElse(null));
-        asignacionTurno.setHoraInicio(horaInicio);
-        asignacionTurno.setHoraFin(horaFin);
-        asignacionTurno.setNumVoluntarios(numVoluntarios);
-        asignacionTurno.setObservaciones(observaciones);
-        this.asignacionTurnoRepository.save(asignacionTurno);
+        TurnoEntity turno = new TurnoEntity();
+        turno.setId(id);
+        turno.setTiendaCampanya(tiendaCampanyaRepository.findById(tiendaCampanyaId).orElse(null));
+        turno.setLineal(lineal);
+        turno.setTipoTurno(this.tipoTurnoRepository.findById(tipoTurnoId).orElse(null));
+        turno.setColaborador(this.colaboradoresRespository.findById(idColaborador).orElse(null));
+        turno.setHoraInicio(horaInicio);
+        turno.setHoraFin(horaFin);
+        turno.setNumVoluntarios(numVoluntarios);
+        turno.setObservaciones(observaciones);
+        this.turnoRepository.save(turno);
 
         return "redirect:/turnos";
     }
 
     @PostMapping("/buscarColaborador")
     public String buscarColaborador(@RequestParam("id") Integer id, Model model) {
-        Colaborador colaborador = this.colaboradoresRespository.findById(id).get();
+        ColaboradorEntity colaborador = this.colaboradoresRespository.findById(id).get();
 
         model.addAttribute("colaborador", colaborador);
 

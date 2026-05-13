@@ -11,14 +11,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_rol")
-    private Rol rol;
+    private RolEntity rol;
 
     private String usuario;
     private String contrasenya;
@@ -28,29 +28,29 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "id_entidad")
-    private Entidad entidad;
+    private EntidadEntity entidad;
 
     @ManyToOne
     @JoinColumn(name = "id_zona_asignada")
-    private Zona zonaAsignada;
+    private ZonaEntity zonaAsignada;
 
     @ManyToOne
     @JoinColumn(name = "id_localidad")
-    private Localidad localidad;
+    private LocalidadEntity localidad;
 
     private Integer cp;
 
     @ManyToOne
     @JoinColumn(name = "id_distrito")
-    private Distrito distrito;
+    private DistritoEntity distrito;
 
     // Relaciones inversas (Un usuario puede coordinar colaboradores y tiendas)
     @OneToMany(mappedBy = "coordinador")
-    private List<Colaborador> colaboradoresCoordinados = new ArrayList<>();
+    private List<ColaboradorEntity> colaboradoresCoordinados = new ArrayList<>();
 
     @OneToMany(mappedBy = "coordinador")
-    private List<TiendaCampanya> tiendasCoordinadas = new ArrayList<>();
+    private List<TiendaCampanyaEntity> tiendasCoordinadas = new ArrayList<>();
 
     @OneToMany(mappedBy = "capitan")
-    private List<TiendaCampanya> tiendasCapitaneadas = new ArrayList<>();
+    private List<TiendaCampanyaEntity> tiendasCapitaneadas = new ArrayList<>();
 }

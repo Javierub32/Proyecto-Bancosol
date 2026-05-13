@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cadena {
+public class CadenaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,9 +20,9 @@ public class Cadena {
     private String nombre;
 
     @OneToMany(mappedBy = "cadena")
-    private List<Tienda> tiendas = new ArrayList<>();
+    private List<TiendaEntity> tiendas = new ArrayList<>();
 
     // --- MAPEO INVERSO MUCHOS A MUCHOS ---
     @ManyToMany(mappedBy = "cadenasParticipantes")
-    private List<Campanya> campanyas = new ArrayList<>();
+    private List<CampanyaEntity> campanyas = new ArrayList<>();
 }

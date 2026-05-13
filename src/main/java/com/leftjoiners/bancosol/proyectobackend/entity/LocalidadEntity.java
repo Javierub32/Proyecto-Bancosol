@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Localidad {
+public class LocalidadEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,17 +20,17 @@ public class Localidad {
 
     @ManyToOne
     @JoinColumn(name = "id_municipio")
-    private Municipio municipio;
+    private MunicipioEntity municipio;
 
     @OneToMany(mappedBy = "localidad")
-    private List<Tienda> tiendas = new ArrayList<>();
+    private List<TiendaEntity> tiendas = new ArrayList<>();
 
     @OneToMany(mappedBy = "localidad")
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 
     @OneToMany(mappedBy = "localidadSede")
-    private List<Colaborador> colaboradoresSede = new ArrayList<>();
+    private List<ColaboradorEntity> colaboradoresSede = new ArrayList<>();
 
     @OneToMany(mappedBy = "colaboraEn")
-    private List<Colaborador> colaboradoresColaboran = new ArrayList<>();
+    private List<ColaboradorEntity> colaboradoresColaboran = new ArrayList<>();
 }

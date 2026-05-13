@@ -25,8 +25,8 @@ public class TiendasController {
 
     @GetMapping("")
     public String doTiendas(Model model) {
-        List<Tienda> tiendas = tiendaRepository.findAll();
-        List<TiendaCampanya> tiendaCampanyas = tiendaCampanyaRepository.findAll();
+        List<TiendaEntity> tiendas = tiendaRepository.findAll();
+        List<TiendaCampanyaEntity> tiendaCampanyas = tiendaCampanyaRepository.findAll();
 
         model.addAttribute("tiendas", tiendas);
         model.addAttribute("tiendaCampanyas", tiendaCampanyas);
@@ -36,9 +36,9 @@ public class TiendasController {
 
     @PostMapping("/filtrarTiendas")
     public String doFiltrarTiendas(Model model,
-                                   @RequestParam("cadena") Cadena cadena,
-                                   @RequestParam("localidad") Localidad localidad,
-                                   @RequestParam("zona")Zona zona, //zona???'
+                                   @RequestParam("cadena") CadenaEntity cadena,
+                                   @RequestParam("localidad") LocalidadEntity localidad,
+                                   @RequestParam("zona") ZonaEntity zona, //zona???'
                                    @RequestParam("coordinador") Integer coordinador){ //o Usuario
         //falta la query y mandarsela a tiendas
         return "tiendas";

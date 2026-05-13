@@ -11,30 +11,30 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tienda {
+public class TiendaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_cadena")
-    private Cadena cadena;
+    private CadenaEntity cadena;
 
     private String nombre;
     private Integer lineales;
 
     @ManyToOne
     @JoinColumn(name = "id_localidad")
-    private Localidad localidad;
+    private LocalidadEntity localidad;
 
     private String cp;
 
     @ManyToOne
     @JoinColumn(name = "id_distrito")
-    private Distrito distrito;
+    private DistritoEntity distrito;
 
     private String domicilio;
 
     @OneToMany(mappedBy = "tienda")
-    private List<TiendaCampanya> tiendasCampanya = new ArrayList<>();
+    private List<TiendaCampanyaEntity> tiendasCampanya = new ArrayList<>();
 }

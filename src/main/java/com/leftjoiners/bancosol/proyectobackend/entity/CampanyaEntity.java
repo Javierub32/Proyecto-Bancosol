@@ -12,14 +12,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Campanya {
+public class CampanyaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo")
-    private TipoCampanya tipoCampanya;
+    private TipoCampanyaEntity tipoCampanya;
 
     @Column(nullable = false)
     private String nombre;
@@ -39,8 +39,8 @@ public class Campanya {
             joinColumns = @JoinColumn(name = "id_campanya"),
             inverseJoinColumns = @JoinColumn(name = "id_cadena")
     )
-    private List<Cadena> cadenasParticipantes = new ArrayList<>();
+    private List<CadenaEntity> cadenasParticipantes = new ArrayList<>();
 
     @OneToMany(mappedBy = "campanya")
-    private List<TiendaCampanya> tiendasCampanya = new ArrayList<>();
+    private List<TiendaCampanyaEntity> tiendasCampanya = new ArrayList<>();
 }

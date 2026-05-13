@@ -6,19 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tipo_turno")
+@Table(name = "municipio")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoTurno {
-
+public class MunicipioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
 
-    @OneToMany(mappedBy = "tipoTurno")
-    private List<AsignacionTurno> asignacionesTurno = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "id_zona")
+    private ZonaEntity zona;
+
+    @OneToMany(mappedBy = "municipio")
+    private List<LocalidadEntity> localidades = new ArrayList<>();
 }

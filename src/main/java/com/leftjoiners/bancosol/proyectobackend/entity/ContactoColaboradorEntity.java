@@ -9,14 +9,14 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContactoColaborador {
+public class ContactoColaboradorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_colaborador")
-    private Colaborador colaborador;
+    private ColaboradorEntity colaborador;
 
     private String nombre;
     private String email;

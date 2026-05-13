@@ -11,23 +11,23 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AsignacionTurno {
+public class TurnoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_tienda_campanya")
-    private TiendaCampanya tiendaCampanya;
+    private TiendaCampanyaEntity tiendaCampanya;
 
     @ManyToOne
     @JoinColumn(name = "id_colaborador")
-    private Colaborador colaborador;
+    private ColaboradorEntity colaborador;
 
     // Relación añadida con la tabla tipo_turno
     @ManyToOne
     @JoinColumn(name = "id_turno")
-    private TipoTurno tipoTurno;
+    private TipoTurnoEntity tipoTurno;
 
     @Column(name = "hora_inicio")
     private LocalTime horaInicio;

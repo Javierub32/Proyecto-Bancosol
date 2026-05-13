@@ -1,7 +1,9 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Tienda" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanya" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Campanya" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanyaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.CampanyaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanyaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,8 +13,8 @@
 </head>
 <body>
 <%
-    List<Tienda> tiendas = (List<Tienda>) request.getAttribute("tiendas");
-    List<TiendaCampanya> tiendaCampanyas = (List<TiendaCampanya>)request.getAttribute("tiendaCampanyas");
+    List<TiendaEntity> tiendas = (List<TiendaEntity>) request.getAttribute("tiendas");
+    List<TiendaCampanyaEntity> tiendaCampanyas = (List<TiendaCampanyaEntity>)request.getAttribute("tiendaCampanyas");
 %>
 
 <jsp:include page="../shared/navbar.jsp"/>
@@ -49,7 +51,7 @@
                         </thead>
 
                         <tbody id="table-body-tiendas">
-                        <% for(Tienda tienda : tiendas){ %>
+                        <% for(TiendaEntity tienda : tiendas){ %>
                         <tr data-id="<%=tienda.getId()%>">
                             <td class="font-medium text-blue"><%= tienda.getNombre() %></td>
                             <td style="text-align: center;">
@@ -59,7 +61,7 @@
                             <td><%= tienda.getLocalidad().getNombre() %></td>
 
                             <%-- Primavera --%>
-                            <% for(TiendaCampanya c : tienda.getTiendasCampanya()) { %>
+                            <% for(TiendaCampanyaEntity c : tienda.getTiendasCampanya()) { %>
                             <td>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 5px;">
                                     <span class="small-td"><%= (c.getCampanya().getTipoCampanya().getId() == 2 ? c.getCoordinador().getNombre() : "Sin asignar") %></span>

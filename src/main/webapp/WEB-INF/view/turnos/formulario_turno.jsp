@@ -1,12 +1,14 @@
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.AsignacionTurno" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Tienda" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.Colaborador" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaEntity" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    AsignacionTurno asignacionTurno = (AsignacionTurno) request.getAttribute("asignacionTurno");
-    Tienda tienda = asignacionTurno.getTiendaCampanya().getTienda();
-    List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
+    TurnoEntity turno = (TurnoEntity) request.getAttribute("asignacionTurno");
+    com.leftjoiners.bancosol.proyectobackend.entity.TiendaEntity tienda = turno.getTiendaCampanya().getTienda();
+    List<ColaboradorEntity> colaboradores = (List<ColaboradorEntity>) request.getAttribute("colaboradores");
+    ColaboradorEntity colaboradorModal = (ColaboradorEntity) request.getAttribute("colaborador");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,26 +27,26 @@
         <div class="turno-info">
             <div class="turno-info-row">
                 <span><%=tienda.getNombre()%> - <span class="text-mutex"><%=tienda.getDomicilio()%></span></span>
-                <span><%=asignacionTurno.getTipoTurno().getNombre()%></span>
+                <span><%=turno.getTipoTurno().getNombre()%></span>
             </div>
             <div class="turno-info-row">
                 <span></span>
-                <span>Lineal <%=asignacionTurno.getLineal()%></span>
+                <span>Lineal <%=turno.getLineal()%></span>
             </div>
         </div>
 
         <form action="/turnos/guardarTurno" method="post">
-            <input type="hidden" value="<%=asignacionTurno.getId() != null ? asignacionTurno.getId() : ""%>" name="id">
-            <input type="hidden" value="<%=asignacionTurno.getTiendaCampanya().getId()%>" name="tiendaCampanyaId">
-            <input type="hidden" value="<%=asignacionTurno.getTipoTurno().getId()%>" name="tipoTurnoId">
-            <input type="hidden" value="<%=asignacionTurno.getLineal()%>" name="lineal">
+            <input type="hidden" value="<%=turno.getId() != null ? turno.getId() : ""%>" name="id">
+            <input type="hidden" value="<%=turno.getTiendaCampanya().getId()%>" name="tiendaCampanyaId">
+            <input type="hidden" value="<%=turno.getTipoTurno().getId()%>" name="tipoTurnoId">
+            <input type="hidden" value="<%=turno.getLineal()%>" name="lineal">
 
             <div class="form-group">
                 <label for="input_colaboradores">Colaborador:</label>
                 <select id="input_colaboradores" name="idColaborador">
                     <option value="0">Seleccione un colaborador...</option>
-                    <%for (Colaborador colaborador : colaboradores) {%>
-                    <option value="<%=colaborador.getId()%>" <%=asignacionTurno.getColaborador() != null && asignacionTurno.getColaborador().equals(colaborador) ? "selected" : "" %>>
+                    <%for (ColaboradorEntity colaborador : colaboradores) {%>
+                    <option value="<%=colaborador.getId()%>" <%=turno.getColaborador() != null && turno.getColaborador().equals(colaborador) ? "selected" : "" %>>
                         <%=colaborador.getNombre()%>
                     </option>
                     <%}%>
@@ -54,33 +56,36 @@
             <div class="form-group">
                 <label for="input_num_voluntarios">Número de voluntarios:</label>
                 <input id="input_num_voluntarios" type="number" name="numVoluntarios"
-                       value="<%=asignacionTurno.getNumVoluntarios() != null ? asignacionTurno.getNumVoluntarios() : ""%>">
+                       value="<%=turno.getNumVoluntarios() != null ? turno.getNumVoluntarios() : ""%>">
             </div>
 
             <div class="form-group-row">
                 <div class="form-group">
                     <label for="input_hora_inicio">Hora Inicio:</label>
                     <input id="input_hora_inicio" type="time" name="horaInicio"
-                           value="<%=asignacionTurno.getHoraInicio() != null ? asignacionTurno.getHoraInicio() : ""%>">
+                           value="<%=turno.getHoraInicio() != null ? turno.getHoraInicio() : ""%>">
                 </div>
 
                 <div class="form-group">
                     <label for="input_hora_fin">Hora Fin:</label>
                     <input id="input_hora_fin" type="time" name="horaFin"
-                           value="<%=asignacionTurno.getHoraFin() != null ? asignacionTurno.getHoraFin() : ""%>">
+                           value="<%=turno.getHoraFin() != null ? turno.getHoraFin() : ""%>">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input_observaciones">Observaciones:</label>
-                <textarea id="input_observaciones" name="observaciones" rows="4"><%=asignacionTurno.getObservaciones() != null ? asignacionTurno.getObservaciones() : ""%></textarea>
+                <textarea id="input_observaciones" name="observaciones" rows="4"><%=turno.getObservaciones() != null ? turno.getObservaciones() : ""%></textarea>
             </div>
 
             <button type="submit" class="btn-submit">Guardar Turno</button>
         </form>
     </div>
     <div id="colaborador_container">
-        <jsp:include page="../colaboradores/info_colaboradores.jsp"/>
+        <%if (colaboradorModal != null){%>
+            <jsp:include page="../colaboradores/info_colaboradores.jsp"/>
+
+        <%}%>
     </div>
 </div>
 </body>

@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoCampanya {
+public class TipoCampanyaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,5 +19,5 @@ public class TipoCampanya {
     private String nombre;
 
     @OneToMany(mappedBy = "tipoCampanya")
-    private List<Campanya> campanyas = new ArrayList<>();
+    private List<CampanyaEntity> campanyas = new ArrayList<>();
 }
