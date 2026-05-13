@@ -19,5 +19,5 @@ COPY --from=build /app/target/*.jar app.jar
 # Exponemos el puerto
 EXPOSE 8080
 
-# Comando para arrancar la app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY target/ProyectoBackend-0.0.1-SNAPSHOT.war app.war
+ENTRYPOINT ["java", "-jar", "app.war"]
