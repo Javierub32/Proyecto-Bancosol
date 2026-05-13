@@ -13,11 +13,11 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
-# Copiamos el .jar generado en la etapa anterior
-COPY --from=build /app/target/*.jar app.jar
+# COPIAMOS EL .WAR DESDE LA ETAPA DE CONSTRUCCIÓN
+COPY --from=build /app/target/*.war app.war
 
 # Exponemos el puerto
 EXPOSE 8080
 
-COPY target/ProyectoBackend-0.0.1-SNAPSHOT.war app.war
+# Ejecutamos el archivo
 ENTRYPOINT ["java", "-jar", "app.war"]
