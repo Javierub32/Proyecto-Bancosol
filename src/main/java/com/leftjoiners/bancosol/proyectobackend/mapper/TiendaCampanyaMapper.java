@@ -27,6 +27,9 @@ public class TiendaCampanyaMapper extends MapperDTO<TiendaCampanya, TiendaCampan
             Tienda t = new Tienda();
             t.setId(entity.getTienda().getId());
             t.setNombre(entity.getTienda().getNombre());
+            t.setDomicilio(entity.getTienda().getDomicilio());
+            t.setCp(entity.getTienda().getCp());
+            t.setLineales(entity.getTienda().getLineales());
             dto.setTienda(t);
         }
 

@@ -3,12 +3,16 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.*" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Colaborador" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.TiendaCampanya" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Tienda" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Turno" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    TurnoEntity turno = (TurnoEntity) request.getAttribute("asignacionTurno");
-    com.leftjoiners.bancosol.proyectobackend.entity.TiendaEntity tienda = turno.getTiendaCampanya().getTienda();
-    List<ColaboradorEntity> colaboradores = (List<ColaboradorEntity>) request.getAttribute("colaboradores");
-    ColaboradorEntity colaboradorModal = (ColaboradorEntity) request.getAttribute("colaborador");
+    Turno turno = (Turno) request.getAttribute("asignacionTurno");
+    List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
+    Colaborador colaboradorModal = (Colaborador) request.getAttribute("colaborador");
+    Tienda tienda = (Tienda) request.getAttribute("tienda");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -45,8 +49,8 @@
                 <label for="input_colaboradores">Colaborador:</label>
                 <select id="input_colaboradores" name="idColaborador">
                     <option value="0">Seleccione un colaborador...</option>
-                    <%for (ColaboradorEntity colaborador : colaboradores) {%>
-                    <option value="<%=colaborador.getId()%>" <%=turno.getColaborador() != null && turno.getColaborador().equals(colaborador) ? "selected" : "" %>>
+                    <%for (Colaborador colaborador : colaboradores) {%>
+                    <option value="<%=colaborador.getId()%>" <%=turno.getColaborador() != null && turno.getColaborador().getId().equals(colaborador.getId()) ? "selected" : "" %>>
                         <%=colaborador.getNombre()%>
                     </option>
                     <%}%>
@@ -84,7 +88,6 @@
     <div id="colaborador_container">
         <%if (colaboradorModal != null){%>
             <jsp:include page="../colaboradores/info_colaboradores.jsp"/>
-
         <%}%>
     </div>
 </div>

@@ -5,10 +5,7 @@ IA: 20%
 
 package com.leftjoiners.bancosol.proyectobackend.mapper;
 
-import com.leftjoiners.bancosol.proyectobackend.dto.Colaborador;
-import com.leftjoiners.bancosol.proyectobackend.dto.TiendaCampanya;
-import com.leftjoiners.bancosol.proyectobackend.dto.TipoTurno;
-import com.leftjoiners.bancosol.proyectobackend.dto.Turno;
+import com.leftjoiners.bancosol.proyectobackend.dto.*;
 import com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +28,15 @@ public class TurnoMapper extends MapperDTO<Turno, TurnoEntity> {
         if (entity.getTiendaCampanya() != null) {
             TiendaCampanya tc = new TiendaCampanya();
             tc.setId(entity.getTiendaCampanya().getId());
+
+            if (entity.getTiendaCampanya().getTienda() != null) {
+                Tienda t = new Tienda();
+                t.setId(entity.getTiendaCampanya().getTienda().getId());
+                t.setNombre(entity.getTiendaCampanya().getTienda().getNombre());
+                t.setDomicilio(entity.getTiendaCampanya().getTienda().getDomicilio());
+                tc.setTienda(t);
+            }
+
             dto.setTiendaCampanya(tc);
         }
 
@@ -38,6 +44,7 @@ public class TurnoMapper extends MapperDTO<Turno, TurnoEntity> {
             Colaborador c = new Colaborador();
             c.setId(entity.getColaborador().getId());
             c.setNombre(entity.getColaborador().getNombre());
+
             dto.setColaborador(c);
         }
 

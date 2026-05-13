@@ -1,16 +1,12 @@
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanyaEntity" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TurnoEntity" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TiendaCampanyaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Turno" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.TiendaCampanya" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Integer turno = (Integer) request.getAttribute("turno");
     Integer lineales = (Integer) request.getAttribute("lineales");
     Integer linealActual = (Integer) request.getAttribute("linealActual");
-    TiendaCampanyaEntity tienda = (TiendaCampanyaEntity) request.getAttribute("tienda");
-    TurnoEntity asignacionTurno = (TurnoEntity) request.getAttribute("asignacionTurno");
+    TiendaCampanya tienda = (TiendaCampanya) request.getAttribute("tienda");
+    Turno asignacionTurno = (Turno) request.getAttribute("asignacionTurno");
 
 
 %>
