@@ -1,12 +1,11 @@
 package com.leftjoiners.bancosol.proyectobackend.controller.rest;
 
 import com.leftjoiners.bancosol.proyectobackend.dto.AsignacionTurno;
+import com.leftjoiners.bancosol.proyectobackend.dto.Turno;
 import com.leftjoiners.bancosol.proyectobackend.service.AsignacionTurnoService;
+import com.leftjoiners.bancosol.proyectobackend.service.TurnoService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,9 +15,19 @@ import java.util.List;
 @RequestMapping("/api/asignacionTurnos")
 public class AsignacionTurnoRestController {
     private final AsignacionTurnoService asignacionTurnoService;
+    private final TurnoService turnoService;
 
     @GetMapping("/")
     public List<AsignacionTurno> doInit() {
         return this.asignacionTurnoService.listarAsignacionColaboradores();
+    }
+
+    @GetMapping("/buscarTurno/{idTienda}/{turno}/{linealActual}")
+    public Turno buscarTurno(
+            @PathVariable Integer idTienda,
+            @PathVariable Integer turno,
+            @PathVariable Integer linealActual) {
+
+        return turnoService.buscarTurnoEspecifico(idTienda, turno, linealActual);
     }
 }
