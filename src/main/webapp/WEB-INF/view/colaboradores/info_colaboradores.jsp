@@ -16,7 +16,6 @@
 <%Colaborador colaborador = (Colaborador) request.getAttribute("colaborador");%>
 
 <div id="colaborador-container">
-    <p>Colaborador seleccionado</p>
     <div id="colaborador-localization">
         <p id="lbl-colaborador"><%=colaborador.getNombre()%></p>
         <p id="lbl-domicilio"><%=colaborador.getDomicilio()%></p>

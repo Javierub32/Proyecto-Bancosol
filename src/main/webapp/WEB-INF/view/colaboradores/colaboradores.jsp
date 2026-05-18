@@ -1,6 +1,7 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.ColaboradorEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.ColaboradorEntity" %><%--
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.ColaboradorEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Colaborador" %><%--
   Created by IntelliJ IDEA.
   User: marin
   Date: 20/04/2026
@@ -16,7 +17,7 @@
 </head>
 <body>
 <%
-    List<ColaboradorEntity> colaboradores = (List<ColaboradorEntity>) request.getAttribute("colaboradores");
+    List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
 %>
 <jsp:include page="../shared/navbar.jsp"/>
 
@@ -38,7 +39,7 @@
                     </thead>
                     <tbody id="table-body">
                         <%
-                            for (ColaboradorEntity colaborador : colaboradores) {
+                            for (Colaborador colaborador : colaboradores) {
 
                         %>
                         <tr data-id="<%=colaborador.getId()%>">
