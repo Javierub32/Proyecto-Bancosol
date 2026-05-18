@@ -36,22 +36,22 @@
                     </tr>
                     </thead>
                     <tbody id="table-body">
-                        <%
-                            for (Colaborador colaborador : colaboradores) {
+                    <%
+                        for (Colaborador colaborador : colaboradores) {
 
-                        %>
-                        <tr data-id="<%=colaborador.getId()%>">
-                            <td class="font-medium text-blue"><%=colaborador.getNombre()%></td>
-                            <td><%=colaborador.getDomicilio()%></td>
-                            <td><%=colaborador.getLocalidadSede().getNombre()%></td>
-                            <td><%=colaborador.getColaboraEn().getNombre()%></td>
-                            <td><%=colaborador.getCoordinador().getNombre()%></td>
-                            <td><%=colaborador.getContactoPrincipal()%></td>
-                            <td><%=colaborador.getObservaciones()%></td>
-                        </tr>
-                        <%
-                            }
-                        %>
+                    %>
+                    <tr data-id="<%=colaborador.getId()%>">
+                        <td class="font-medium text-blue"><%=colaborador.getNombre()%></td>
+                        <td><%=colaborador.getDomicilio()%></td>
+                        <td><%=colaborador.getLocalidadSede().getNombre()%></td>
+                        <td><%=colaborador.getColaboraEn().getNombre()%></td>
+                        <td><%=colaborador.getCoordinador().getNombre()%></td>
+                        <td><%=colaborador.getContactoPrincipal()%></td>
+                        <td><%=colaborador.getObservaciones()%></td>
+                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
             </div>
