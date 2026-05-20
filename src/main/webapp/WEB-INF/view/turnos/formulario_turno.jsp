@@ -13,6 +13,7 @@
     List<Colaborador> colaboradores = (List<Colaborador>) request.getAttribute("colaboradores");
     Colaborador colaboradorModal = (Colaborador) request.getAttribute("colaborador");
     Tienda tienda = (Tienda) request.getAttribute("tienda");
+    String errorModal = (String) request.getAttribute("errorModal");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -44,6 +45,8 @@
             <input type="hidden" value="<%=turno.getTiendaCampanya().getId()%>" name="tiendaCampanyaId">
             <input type="hidden" value="<%=turno.getTipoTurno().getId()%>" name="tipoTurnoId">
             <input type="hidden" value="<%=turno.getLineal()%>" name="lineal">
+            <input type="hidden" id="errorModal" value="<%=errorModal != null ? errorModal : ""%>" name="errorModal">
+
 
             <div class="form-group">
                 <label for="input_colaboradores">Colaborador:</label>
@@ -96,6 +99,11 @@
     const colaboradorContainer = document.querySelector("#colaborador_container");
     const inputColaboradores = document.querySelector("#input_colaboradores");
     let colaboradorActual = inputColaboradores.value;
+    let errorModal = document.querySelector("#errorModal").value;
+
+    if (errorModal != "") {
+        alert(errorModal);
+    }
 
     function fetchColaboradorData() {
         if (colaboradorActual == 0) {
@@ -122,5 +130,7 @@
         colaboradorActual = e.target.value;
         fetchColaboradorData();
     })
+
+
 </script>
 </html>

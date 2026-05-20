@@ -2,6 +2,7 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.TiendaCampanya" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Integer id = (Integer) request.getAttribute("id");
     Integer turno = (Integer) request.getAttribute("turno");
     Integer lineales = (Integer) request.getAttribute("lineales");
     Integer linealActual = (Integer) request.getAttribute("linealActual");
@@ -96,5 +97,4 @@
 <div id="button-container">
     <button id="create-button"><%=asignacionTurno == null ? "Crear" : "Editar"%></button>
     <button id="cancel-button">Cancelar</button>
-    <button id="export-button">Exportar</button>
 </div>

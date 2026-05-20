@@ -67,6 +67,7 @@ public class AsignacionTurnoController {
     public String crearTurno(@RequestParam(value = "id", required = false) Integer id,
                               @RequestParam(value = "turno", required = false) Integer turno,
                               @RequestParam(value = "lineal", required = false) Integer lineal,
+                              @RequestParam(value = "errorModal", required = false) String errorModal,
                               Model model) {
         TiendaCampanya tienda = this.tiendaCampanyaService.buscarTiendaCampanya(id);
         Turno asignacionTurno = this.turnoService.buscarTurnoEspecifico(id, turno, lineal);
@@ -88,6 +89,7 @@ public class AsignacionTurnoController {
         model.addAttribute("tienda", tienda.getTienda());
         model.addAttribute("asignacionTurno", asignacionTurno);
         model.addAttribute("currentSection", "turnos");
+        model.addAttribute("errorModal", errorModal);
         return "turnos/formulario_turno";
     }
 
@@ -97,10 +99,47 @@ public class AsignacionTurnoController {
                                @RequestParam("tipoTurnoId") Integer tipoTurnoId,
                                @RequestParam("lineal") Integer lineal,
                                @RequestParam("idColaborador") Integer idColaborador,
-                               @RequestParam("horaInicio") LocalTime horaInicio,
-                               @RequestParam("horaFin") LocalTime horaFin,
-                               @RequestParam("numVoluntarios") Integer numVoluntarios,
-                               @RequestParam("observaciones") String observaciones) {
+                               @RequestParam(value = "horaInicio", required = false ) LocalTime horaInicio,
+                               @RequestParam(value = "horaFin", required = false) LocalTime horaFin,
+                               @RequestParam(value ="numVoluntarios", required = false) Integer numVoluntarios,
+                               @RequestParam("observaciones") String observaciones,
+                               Model model) {
+        String errorModal = null;
+        if (horaInicio == null || horaFin == null) {
+          errorModal = "Error: Debes introducir hora de inicio y fin";
+        } else if (horaInicio.isAfter(horaFin)) {
+            errorModal = "Error: La hora de inicio no puede ser posterior a la de fin.";
+        } else if (numVoluntarios != null && numVoluntarios < 1) {
+            errorModal = "Error: Debe haber al menos 1 voluntario asignado.";
+        }
+
+        if (errorModal != null) {
+            TiendaCampanya tienda = this.tiendaCampanyaService.buscarTiendaCampanya(tiendaCampanyaId);
+            Colaborador colaborador = (idColaborador != null && idColaborador != 0) ?
+                    this.colaboradorService.buscarColaborador(idColaborador) : null;
+
+            Turno asignacionTurno = new Turno();
+            asignacionTurno.setId(id);
+            asignacionTurno.setTiendaCampanya(tienda);
+            asignacionTurno.setTipoTurno(this.tipoTurnoService.buscarTipoTurno(tipoTurnoId));
+            asignacionTurno.setLineal(lineal);
+            asignacionTurno.setColaborador(colaborador);
+            asignacionTurno.setHoraInicio(horaInicio);
+            asignacionTurno.setHoraFin(horaFin);
+            asignacionTurno.setNumVoluntarios(numVoluntarios);
+            asignacionTurno.setObservaciones(observaciones);
+
+            model.addAttribute("colaboradores", this.colaboradorService.listarColaboradores());
+            model.addAttribute("colaborador", colaborador);
+            model.addAttribute("tienda", tienda.getTienda());
+            model.addAttribute("asignacionTurno", asignacionTurno);
+            model.addAttribute("currentSection", "turnos");
+            model.addAttribute("errorModal", errorModal);
+
+            return "turnos/formulario_turno";
+        }
+
+
         this.turnoService.guardarTurno(
                 id, tiendaCampanyaId, tipoTurnoId, lineal, idColaborador,
                 horaInicio, horaFin, numVoluntarios, observaciones
