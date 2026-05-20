@@ -15,13 +15,14 @@
 <body>
 <%
     List<TiendaEntity> tiendas = (List<TiendaEntity>) request.getAttribute("tiendas");
-    //List<TiendaCampanyaEntity> tiendaCampanyas = (List<TiendaCampanyaEntity>)request.getAttribute("tiendaCampanyas");
 
     List<CadenaEntity> cadenas = (List<CadenaEntity>) request.getAttribute("cadenas");
     List<ZonaEntity> zonas = (List<ZonaEntity>) request.getAttribute("zonas");
     List<LocalidadEntity> localidades = (List<LocalidadEntity>) request.getAttribute("localidades");
-    //List<ColaboradorEntity> colaboradores = (List<ColaboradorEntity>) request.getAttribute("colaboradores"); //COORDINADORES VIENE DE AQUI? O NO??
 
+    Integer cadenaMarcada = (Integer) request.getAttribute("cadenaMarcada");
+    Integer zonaMarcada = (Integer) request.getAttribute("zonaMarcada");
+    Integer localidadMarcada = (Integer) request.getAttribute("localidadMarcada");
 %>
 
 <jsp:include page="../shared/navbar.jsp"/>
@@ -45,7 +46,7 @@
                         <select name="cadena-tienda" id="cadena-tienda" class="btn-outline" style="padding: 5px 15px;">
                             <option value="">Sin Filtro</option>
                             <% for(CadenaEntity c : cadenas){ %>
-                            <option value="<%=c.getId()%>"><%=c.getNombre()%></option>
+                            <option value="<%=c.getId()%>" <%= c.getId() == cadenaMarcada ? "selected" : ""%> > <%=c.getNombre()%></option>
                             <% } %>
                         </select>
 
@@ -56,7 +57,7 @@
                         <select name="zona-tienda" id="zona-tienda" class="btn-outline" style="padding: 5px 15px;">
                             <option value="">Sin Filtro</option>
                             <% for(ZonaEntity z : zonas){ %>
-                            <option value="<%=z.getId()%>"><%=z.getNombre()%></option>
+                            <option value="<%=z.getId()%>" <%= z.getId() == zonaMarcada ? "selected" : ""%> ><%=z.getNombre()%></option>
                             <% } %>
                         </select>
 
@@ -67,7 +68,7 @@
                         <select name="localidad-tienda" id="localidad-tienda" class="btn-outline" style="padding: 5px 15px;">
                             <option value="">Sin Filtro</option>
                             <% for(LocalidadEntity l : localidades){ %>
-                            <option value="<%=l.getId()%>"><%=l.getNombre()%></option>
+                            <option value="<%=l.getId()%>" <%= l.getId() == localidadMarcada ? "selected" : ""%>><%=l.getNombre()%></option>
                             <% } %>
                         </select>
                     </div>
@@ -89,7 +90,7 @@
                         <thead>
                         <tr>
                             <th rowspan="2">Tienda</th>
-                            <th rowspan="2">Participa</th>
+                            <th rowspan="2">Lineales</th>
                             <th rowspan="2">Domicilio</th>
                             <th rowspan="2">Localidad</th>
                             <th colspan="2" style="text-align: center;">Coordinadores</th>
@@ -104,9 +105,7 @@
                         <% for(TiendaEntity tienda : tiendas){ %>
                         <tr data-id="<%=tienda.getId()%>">
                             <td class="font-medium text-blue"><%= tienda.getNombre() %></td>
-                            <td style="text-align: center;">
-                                <input type="checkbox" name="participa" value="<%=tienda.getId()%>">    <%-- checked si participa en tiendaCampanya? --%>
-                            </td>
+                            <td><%=tienda.getLineales()%></td>
                             <td class="small-td"><%= tienda.getDomicilio() %></td>
                             <td><%= tienda.getLocalidad().getNombre() %></td>
 
@@ -115,14 +114,15 @@
                             <td>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 5px;">
                                     <span class="small-td"><%= (c.getCampanya().getTipoCampanya().getId() == 2 ? c.getCoordinador().getNombre() : "Sin asignar") %></span>
-                                    <button class="btn-outline" style="padding: 2px 8px; font-size: 0.7rem;">VER</button>
+                                    <button class="btn-outline" style="padding: 2px 8px; font-size: 0.7rem;" <%= c.getCampanya().getTipoCampanya().getId() == 2 ? "" : "disabled" %> >VER</button>
                                 </div>
                             </td>
                             <%-- Gran Recogida --%>
                             <td>
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 5px;">
                                     <span class="small-td"><%= (c.getCampanya().getTipoCampanya().getId() == 1 ? c.getCoordinador().getNombre() : "Sin asignar") %></span>
-                                    <button class="btn-outline" style="padding: 2px 8px; font-size: 0.7rem;">VER</button>
+                                    <button class="btn-outline" style="padding: 2px 8px; font-size: 0.7rem;" <%= c.getCampanya().getTipoCampanya().getId() == 1 ? "" : "disabled" %>
+                                    >VER</button>
                                 </div>
                             </td>
                             <% } %>

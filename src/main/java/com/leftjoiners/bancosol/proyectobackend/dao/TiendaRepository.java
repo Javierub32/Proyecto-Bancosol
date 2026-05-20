@@ -11,10 +11,10 @@ public interface TiendaRepository extends JpaRepository<TiendaEntity, Integer> {
 
     @Query("SELECT t FROM TiendaEntity t WHERE " +
             "(:cadenaId IS NULL OR t.cadena.id = :cadenaId) AND " +
-            "(:localidadId IS NULL OR t.localidad.id = :localidadId) " //AND "
-            //+ "(:zonaId IS NULL OR t.zona.id = :zonaId)"
+            "(:localidadId IS NULL OR t.localidad.id = :localidadId) AND "
+            + "(:zonaId IS NULL OR t.localidad.municipio.zona.id = :zonaId)"
             )
     List<TiendaEntity> filtrarTiendasMulticriterio(@Param("cadenaId") Integer cadenaId,
-                                                   @Param("localidadId") Integer localidadId);
-                                                   //@Param("zonaId") Integer zonaId);
+                                                   @Param("localidadId") Integer localidadId,
+                                                   @Param("zonaId") Integer zonaId);
 }

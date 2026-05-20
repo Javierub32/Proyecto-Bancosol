@@ -60,6 +60,14 @@ body {
     transition: all 0.2s;
 }
 
+.btn-outline:disabled {
+    color: #a0a0a0; /* Texto gris claro */
+    border-color: #d1d5db; /* Borde gris muy suave */
+    background-color: #f3f4f6; /* Fondo gris casi blanco */
+    cursor: not-allowed; /* Cambia el ratón al icono de prohibido/bloqueado */
+    transform: none; /* Evita que haga el efecto de levantarse si pasas el ratón */
+}
+
 .btn-outline:hover {
     background-color: var(--bg-main);
 }

@@ -21,9 +21,6 @@ public class TiendasController {
     protected TiendaRepository tiendaRepository;
 
     @Autowired
-    protected TiendaCampanyaRepository tiendaCampanyaRepository;
-
-    @Autowired
     protected CadenaRepository cadenaRepository;
 
     @Autowired
@@ -32,18 +29,17 @@ public class TiendasController {
     @Autowired
     protected LocalidadRepository localidadRepository;
 
-    //@Autowired
-    //protected ColaboradoresRespository colaboradoresRespository;
+    @Autowired
+    protected UsuarioRepository usuarioRepository;
+
 
     @GetMapping("")
     public String doTiendas(Model model,
                             @RequestParam(value = "tiendas", required = false) List<TiendaEntity> tiendasFiltradas) {
 
         List<TiendaEntity> tiendas = tiendaRepository.findAll();
-        List<TiendaCampanyaEntity> tiendaCampanyas = tiendaCampanyaRepository.findAll();
 
         model.addAttribute("tiendas", tiendas);
-        model.addAttribute("tiendaCampanyas", tiendaCampanyas);
         model.addAttribute("currentSection", "tiendas");
 
         //Filtrado:
@@ -53,8 +49,6 @@ public class TiendasController {
         model.addAttribute("zonas", zonas);
         List<LocalidadEntity> localidades = localidadRepository.findAll();
         model.addAttribute("localidades", localidades);
-        //List<ColaboradorEntity> colaboradores = colaboradoresRespository.findAll();
-        //model.addAttribute("colaboradores", colaboradores);
 
         return "/tiendas/tiendas";
     }
@@ -64,17 +58,32 @@ public class TiendasController {
                                    @RequestParam(value = "cadena-tienda", required = false) Integer cadenaId,
                                    @RequestParam(value = "localidad-tienda", required = false) Integer localidadId,
                                    @RequestParam(value = "zona-tienda", required = false) Integer zonaId){
-                                   //@RequestParam("coordinador") Integer coordinador)
 
 
-        List<TiendaEntity> tiendasFiltradas = this.tiendaRepository.filtrarTiendasMulticriterio(cadenaId, localidadId /*, zonaId*/);
+        List<TiendaEntity> tiendasFiltradas = this.tiendaRepository.filtrarTiendasMulticriterio(cadenaId, localidadId, zonaId);
         model.addAttribute("tiendas", tiendasFiltradas);
+        model.addAttribute("currentSection", "tiendas");
 
-        model.addAttribute("tiendaCampanyas", this.tiendaCampanyaRepository.findAll());
         model.addAttribute("cadenas", this.cadenaRepository.findAll());
         model.addAttribute("zonas", this.zonaRepository.findAll());
         model.addAttribute("localidades", this.localidadRepository.findAll());
 
+        model.addAttribute("cadenaMarcada", cadenaId);
+        model.addAttribute("zonaMarcada", zonaId);
+        model.addAttribute("localidadMarcada", localidadId);
+
         return "/tiendas/tiendas";
     }
+
+    @GetMapping("/coordinadores/coordinador")
+    public String doCoordinador(Model model, @RequestParam("id") Integer id){
+
+        UsuarioEntity coordinador = this.usuarioRepository.findById(id).get();
+        model.addAttribute("coordinador", coordinador);
+
+        model.addAttribute("currentSection", "coordinadores");
+
+        return "/coordinadores/coordinador";
+    }
+
 }
