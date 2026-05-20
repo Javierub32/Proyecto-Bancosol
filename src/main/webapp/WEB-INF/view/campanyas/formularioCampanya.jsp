@@ -5,6 +5,8 @@
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.TipoCampanyaEntity" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.CampanyaEntity" %>
 <%@ page import="com.leftjoiners.bancosol.proyectobackend.entity.CadenaEntity" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.Cadena" %>
+<%@ page import="com.leftjoiners.bancosol.proyectobackend.dto.TipoCampanya" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -14,8 +16,8 @@
     </head>
     <body>
     <%
-        List<CadenaEntity> listaCadenas = (List<CadenaEntity>) request.getAttribute("cadenas");
-        List<TipoCampanyaEntity> tiposCapanyas = (List<TipoCampanyaEntity>) request.getAttribute("tiposCampanya");
+        List<Cadena> listaCadenas = (List<Cadena>) request.getAttribute("cadenas");
+        List<TipoCampanya> tiposCapanyas = (List<TipoCampanya>) request.getAttribute("tiposCampanya");
 
         Boolean editando = (Boolean) request.getAttribute("editando");
 
@@ -23,8 +25,8 @@
         Integer idCampanyaActual = (Integer) request.getAttribute("idCampanya");
         Object fechaInicioActual = request.getAttribute("fechaInicio");
         Object fechaFinActual = request.getAttribute("fechaFin");
-        TipoCampanyaEntity tipoCampanyaActual = (TipoCampanyaEntity) request.getAttribute("tipoCampanyaActual");
-        List<CadenaEntity> cadenasCampanyaActual = (List<CadenaEntity>) request.getAttribute("cadenasCampanyaActual");
+        TipoCampanya tipoCampanyaActual = (TipoCampanya) request.getAttribute("tipoCampanyaActual");
+        List<Cadena> cadenasCampanyaActual = (List<Cadena>) request.getAttribute("cadenasCampanyaActual");
 
     %>
     <jsp:include page="../shared/navbar.jsp"/>
@@ -67,7 +69,7 @@
                                 <select id="tipoCampanya" name="tipoCampanya" class="campanya-select" required>
                                     <option value="">Selecciona un tipo</option>
 
-                                    <% for (TipoCampanyaEntity t : tiposCapanyas) { %>
+                                    <% for (TipoCampanya t : tiposCapanyas) { %>
                                     <option value="<%= t.getId() %>"
                                             <%= editando && tipoCampanyaActual != null && tipoCampanyaActual.getId().equals(t.getId()) ? "selected" : "" %>>
                                         <%= t.getNombre() %>
@@ -82,13 +84,14 @@
                                 Selecciona las cadenas que participarán en esta campaña.
                             </div>
                             <div class="checkbox-grid">
-                                <% for (CadenaEntity c: listaCadenas){%>
+                                <% for (Cadena c: listaCadenas){%>
                                     <label class="checkbox-card">
-                                        <input type="checkbox" name="cadenaParticipa" value="<%=c.getId()%>" <%= editando && cadenasCampanyaActual != null && cadenasCampanyaActual.contains(c) ? "checked" : ""%>>
+                                        <input type="checkbox" name="cadenaParticipa" value="<%=c.getId()%>" <%= editando && cadenasCampanyaActual != null && cadenasCampanyaActual.stream().anyMatch(cad -> cad.getId().equals(c.getId())) ? "checked" : ""%>>
                                         <span><%= c.getNombre()%></span>
                                     </label>
                                 <%};%>
                             </div>
+
                             <section class="cadenas-btns">
 
                             </section>
@@ -102,7 +105,6 @@
                             <a class="btn-primary">
                                 <button type="submit" class="btn-primary" style="font-size: 15px ; padding: 0px" >Guardar</button>
                             </a>
-
                         </section>
 
                     </form>
